@@ -1,13 +1,15 @@
 package bankingkata
 
-class Account {
+class Account(
+    private val transactionLog: TransactionLog
+) {
 
     fun withdraw(amount: Int) {
-        TODO("Not yet implemented")
+        transactionLog.addWithdraw(amount)
     }
 
     fun deposit(amount: Int) {
-        TODO("Not yet implemented")
+        transactionLog.addDeposit(amount)
     }
 
     fun printStatement() {
