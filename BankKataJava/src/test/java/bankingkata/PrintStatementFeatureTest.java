@@ -18,7 +18,7 @@ public class PrintStatementFeatureTest {
 
     @BeforeEach
     public void before() {
-        account = new Account();
+        account = new Account(new TransactionLog());
     }
 
     @Test

@@ -1,15 +1,19 @@
 package bankingkata;
 
-import jdk.jshell.spi.ExecutionControl;
-
 public class Account {
 
+    private final TransactionLog transactionLog;
+
+    public Account(TransactionLog transactionLog) {
+        this.transactionLog = transactionLog;
+    }
+
     public void withdraw(int amount) {
-        throw new RuntimeException("Not yet implemented");
+        transactionLog.addWithdraw(amount);
     }
 
     public void deposit(int amount) {
-        throw new RuntimeException("Not yet implemented");
+        transactionLog.addDeposit(amount);
     }
 
     public void printStatement() {
