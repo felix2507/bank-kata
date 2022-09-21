@@ -3,9 +3,11 @@ package bankingkata;
 public class Account {
 
     private final TransactionLog transactionLog;
+    private StatementPrinter statementPrinter;
 
-    public Account(TransactionLog transactionLog) {
+    public Account(TransactionLog transactionLog, StatementPrinter statementPrinter) {
         this.transactionLog = transactionLog;
+        this.statementPrinter = statementPrinter;
     }
 
     public void withdraw(int amount) {
@@ -17,7 +19,7 @@ public class Account {
     }
 
     public void printStatement() {
-        throw new RuntimeException("Not yet implemented");
+        statementPrinter.print(transactionLog.getAllTransactions());
     }
 
 }
