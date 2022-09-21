@@ -8,6 +8,7 @@ namespace BankKataTests
     public class PrintStatementFeatureTest
     {
         private readonly Mock<IConsole> _consoleMock;
+        private readonly ITransactionRepository _transactionRepository;
         private readonly Account _account;
 
         private readonly IList<string> _printedConsoleStatements;
@@ -22,7 +23,9 @@ namespace BankKataTests
             _consoleMock.Setup(x => x.PrintLine(It.IsAny<string>()))
                 .Callback((string text) => _printedConsoleStatements.Add(text));
 
-            _account = new Account();
+            _transactionRepository = new TransactionRepository();
+
+            _account = new Account(_transactionRepository);
         }
 
         [Fact]
