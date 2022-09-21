@@ -1,0 +1,5 @@
+package bankingkata
+
+class Transaction {
+
+}

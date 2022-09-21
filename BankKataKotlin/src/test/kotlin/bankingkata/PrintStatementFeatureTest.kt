@@ -17,7 +17,7 @@ class PrintStatementFeatureTest {
 
     @BeforeEach
     fun before() {
-        account = Account(TransactionLog())
+        account = Account(TransactionLog(), StatementPrinter())
     }
 
     @Test

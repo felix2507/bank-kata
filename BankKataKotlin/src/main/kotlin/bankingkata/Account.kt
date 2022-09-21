@@ -1,7 +1,8 @@
 package bankingkata
 
 class Account(
-    private val transactionLog: TransactionLog
+    private val transactionLog: TransactionLog,
+    private val statementPrinter: StatementPrinter
 ) {
 
     fun withdraw(amount: Int) {
@@ -13,7 +14,7 @@ class Account(
     }
 
     fun printStatement() {
-        TODO("Not yet implemented")
+        statementPrinter.printAll(transactionLog.allTransactions)
     }
 }
 
