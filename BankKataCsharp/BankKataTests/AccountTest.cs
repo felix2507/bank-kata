@@ -1,5 +1,6 @@
 ﻿using BankKata;
 using Moq;
+using System.Collections.Generic;
 using Xunit;
 
 namespace BankKataTests
@@ -7,26 +8,40 @@ namespace BankKataTests
     public class AccountTest
     {
 
-        [Fact]
-        public void shouldStoreADepositTransaction()
+        Account _account;
+        readonly Mock<ITransactionRepository> _transactionRepository = new Mock<ITransactionRepository>();
+        readonly Mock<IStatementPrinter> _statementPrinter = new Mock<IStatementPrinter>();
+
+        public AccountTest()
         {
-            var transactionRepository = new Mock<ITransactionRepository>();
-            var account = new Account(transactionRepository.Object);
-
-            account.Deposit(100);
-
-            transactionRepository.Verify(repo => repo.AddDepositTransaction(100));
+            _account = new Account(_transactionRepository.Object, _statementPrinter.Object);
         }
 
         [Fact]
-        public void shouldStoreAWithdrawalTransaction()
+        public void ShouldStoreADepositTransaction()
         {
-            var transactionRepository = new Mock<ITransactionRepository>();
-            var account = new Account(transactionRepository.Object);
+            _account.Deposit(100);
 
-            account.Withdraw(100);
+            _transactionRepository.Verify(it => it.AddDepositTransaction(100));
+        }
 
-            transactionRepository.Verify(repo => repo.AddWithDrawalTransaction(100));
+        [Fact]
+        public void ShouldStoreAWithdrawalTransaction()
+        {
+            _account.Withdraw(100);
+
+            _transactionRepository.Verify(it => it.AddWithDrawalTransaction(100));
+        }
+
+        [Fact]
+        public void ShouldPrintAllTransactions()
+        {
+            var allTransactions = new List<Transaction>();
+            _transactionRepository.Setup(it => it.GetAllTransactions()).Returns(allTransactions);
+
+            _account.PrintStatement();
+
+            _statementPrinter.Verify(it => it.Print(allTransactions));
         }
     }
 }

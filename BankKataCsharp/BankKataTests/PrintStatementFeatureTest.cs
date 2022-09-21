@@ -12,6 +12,7 @@ namespace BankKataTests
         private readonly Account _account;
 
         private readonly IList<string> _printedConsoleStatements;
+        private IStatementPrinter _statementPrinter;
 
         public PrintStatementFeatureTest()
         {
@@ -24,8 +25,9 @@ namespace BankKataTests
                 .Callback((string text) => _printedConsoleStatements.Add(text));
 
             _transactionRepository = new TransactionRepository();
+            _statementPrinter = new StatementPrinter();
 
-            _account = new Account(_transactionRepository);
+            _account = new Account(_transactionRepository, _statementPrinter);
         }
 
         [Fact]

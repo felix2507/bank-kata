@@ -5,26 +5,28 @@ namespace BankKata
 {
     public class Account
     {
-        private readonly ITransactionRepository transactionRepository;
+        private readonly ITransactionRepository _transactionRepository;
+        private readonly IStatementPrinter _statementPrinter;
 
-        public Account(ITransactionRepository transactionRepository)
+        public Account(ITransactionRepository transactionRepository, IStatementPrinter statementPrinter)
         {
-            this.transactionRepository = transactionRepository;
+            _transactionRepository = transactionRepository;
+            _statementPrinter = statementPrinter;
         }
 
         public void Deposit(int amount)
         {
-            transactionRepository.AddDepositTransaction(100);
+            _transactionRepository.AddDepositTransaction(100);
         }
 
         public void Withdraw(int amount)
         {
-            transactionRepository.AddWithDrawalTransaction(amount);
+            _transactionRepository.AddWithDrawalTransaction(amount);
         }
 
         public void PrintStatement()
         {
-            throw new NotImplementedException();
+            _statementPrinter.Print(_transactionRepository.GetAllTransactions());
         }
     }
 }
